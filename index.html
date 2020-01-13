@@ -6,7 +6,14 @@
 <script>
 $(document).ready(function () {
     $('#sample-plate-modal').hide();
-    var plateViewer = $('#modal-sample-plate').plate();
+    var plateViewer = $('#modal-sample-plate').plate({
+        wellActiveCss: 'active-well',
+        wellCss: 'well',
+        toolTipCss: 'plate-tooltip',
+        toolTipTextCss: 'tooltiptext',
+        plateErrorCss: 'alert alert-danger',
+        sampleCountExceedErrorMsg: 'Sample count exceeds 96 well plate'
+    });
     var myPlate = plateViewer.data('myPlate');
     myPlate.draw(["DNA051905","DNA051905","DNA051905","DNA051905","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","DNA051905","DNA051905","DNA051905","DNA051905","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","DNA051905","DNA051905","DNA051905","DNA051905","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","DNA051905","DNA051905","DNA051905","DNA051905","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","DNA051905","DNA051905","DNA051905","DNA051905","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","DNA051905","DNA051905","DNA052731","DNA052731","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","DNA052731","DNA052731","DNA056644","DNA056923","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","DNA058150","DNA056219","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY","EMPTY"]);
 

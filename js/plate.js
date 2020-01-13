@@ -3,27 +3,44 @@
         var elem = $(element);
         var obj = this;
         var settings = $.extend({
-            param: 'defaultValue'
+            wellActiveCss: 'active-well',
+            wellCss: 'well',
+            toolTipCss: 'plate-tooltip',
+            toolTipTextCss: 'tooltiptext',
+            plateErrorCss: 'alert alert-danger',
+            sampleCountExceedErrorMsg: 'Sample count exceeds 96 well plate'
+
         }, options || {});
 
         this.draw = function(data){
+            var sampleStore = $('#samples-storage');
+            localStorage.setItem("samples", "");
             console.log('Draw method, data:' + data);
             elem.html("");
+
             if ($(data).size() > 96){
-                elem.append("<div class='alert alert-danger'><h1>Sample count exceeds 96 well plate ("+ $(data).size() +")</h1></div>")
+                elem.append("<div class='"+ settings.plateErrorCss +"'><h1>"+ settings.sampleCountExceedErrorMsg +" ("+ $(data).size() +")</h1></div>")
             } else {
                 $(data).each(function (i, sample) {
-                    var wellClass = 'active';
-                    if (sample == "" || sample == "EMPTY"){
-                        wellClass = 'well';
+                    var sampleId = sample[0];
+                    var sampleName = sample[1];
+                    var well = sample[2];
+                    var wellClass = getStyle(sampleId);
+
+                    elem.append("<div class='span1'><div class='"+ wellClass +" "+ settings.toolTipCss +"' >" + sampleName + "<span class='"+ settings.toolTipTextCss +"'>" + sampleName + " ("+ well +")</span></div></div>");
+                    if (sampleId != "0") {
+                        localStorage.setItem("samples", localStorage.getItem("samples") + ";" + sampleId + ":" + well);
                     }
-                    elem.append("<div class='span1'><div class='"+ wellClass +" plate-tooltip' >" + sample + "<span class='tooltiptext'>" + sample + "</span></div></div>");
                 });
             }
         };
 
-        var privateMethod = function(){
-            console.log('private method called!');
+        var getStyle = function(sampleId){
+            var wellClass = settings.wellActiveCss;
+            if (sampleId == "0"){
+                wellClass = settings.wellCss;
+            }
+            return wellClass;
         };
     };
 
